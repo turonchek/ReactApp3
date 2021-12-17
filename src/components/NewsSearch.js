@@ -24,7 +24,7 @@ export class NewsSearch extends Component {
     }
 }
 
-NewsSearch.PropTypes={
+NewsSearch.propTypes={
     search:PropTypes.string.isRequired,
     onChangeSearch:PropTypes.func.isRequired
 }

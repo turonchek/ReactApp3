@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import faker from 'faker';
 import {getBase64} from "../utils";
 import { HASHTAGS, AUTHORS } from "../../data";
+import { FormErrors } from '../FormErrors';
 // console.log(AUTHORS)
 
 export class NewsForm extends Component{
@@ -13,6 +14,10 @@ export class NewsForm extends Component{
         photo:``,
         hashtags:[],
         authors:AUTHORS[0].name,
+        formErrors: {title:``,text:``},
+        titleValid:false,
+        textValid:false,
+        formValid:false,
     }
 
     handleSubmit = (e) => {
@@ -29,9 +34,8 @@ export class NewsForm extends Component{
     handleChangeText = (e) => {
         const input = e.currentTarget;
         const { value, name } = input;
-        this.setState({
-            [name]: value,
-        });
+        this.setState({ [name]: value }, 
+            () => { this.validateField(name, value) });
     };
 
     handleChangePhoto = (e) => {
@@ -64,6 +68,33 @@ export class NewsForm extends Component{
         });
     };
 
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let titleValid = this.state.titleValid;
+        let textValid = this.state.textValid;
+        switch(fieldName) {
+            case 'title':
+                titleValid = value.length >3 && value.length <20;
+                console.log(titleValid)
+                fieldValidationErrors.title = titleValid ? '' : ' is invalid';
+                break;
+            case 'text':
+                textValid = value.length >= 10;
+                fieldValidationErrors.text = textValid ? '': ' is too short';
+                break;
+            default:
+                break;
+            }
+            this.setState({formErrors: fieldValidationErrors,
+                            titleValid: titleValid,
+                            textValid: textValid
+                        }, this.validateForm);
+        }
+        validateForm() {
+            this.setState({formValid: this.state.titleValid &&
+                                    this.state.textValid});
+        }
+
     render(){
         const {
             title,
@@ -72,10 +103,17 @@ export class NewsForm extends Component{
             photo,
             hashtags,
             authors,
+            formErrors,
+            titleValid,
+            textValid,
+            formValid,
         } = this.state;
 
         return (
             <div className="news-form">
+                <div className="panel panel-default">
+                    <FormErrors formErrors={this.state.formErrors} />
+                </div>
                 <form onSubmit={this.handleSubmit} className="news-form__cont">
 
                 <div className="news-form__row">
