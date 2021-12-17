@@ -10,15 +10,12 @@ export function makeNewsItem() {
         text:faker.lorem.sentences(9),
         description: faker.lorem.sentences(3),
         photo: faker.image.imageUrl(),
-        // hashtags:HASHTAGS,
-        // authors:AUTHORS,
         hashtags: [
             HASHTAGS[hashtagIndex].id,
             HASHTAGS[hashtagIndex >= HASHTAGS.length - 1 ? 0 : hashtagIndex + 1].id,
         ],
         authors:[
-            AUTHORS[authorsIndex].id,
-            AUTHORS[authorsIndex >= AUTHORS.length - 1 ? 0 : authorsIndex + 1].name,
+            AUTHORS[authorsIndex].id
         ],
     }
 }

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { makeNews, makeNewsItem } from '../../data';
 import { NewsList } from '../NewsList/NewsList';
+import { NewsForm } from '../NewsForm/NewsForm';
 
 const news=makeNews();
 // console.log(news)
@@ -13,7 +14,6 @@ export class NewsPage extends Component{
     };
     
     addNewsItem = (item) => {
-        // console.log(item);
         this.setState({
         items: [
             item,
@@ -44,11 +44,11 @@ export class NewsPage extends Component{
                 {isEditing ? 'Cancel' : 'Add item'}
                 </button>
             </div>
-            {/* {isEditing && (
-                <MovieForm
-                onAddMovie={this.addMovie}
+            {isEditing && (
+                <NewsForm
+                    onAddNewsItem={this.addNewsItem}
                 />
-            )} */}
+            )}
             <NewsList
                 items={items}
                 onRemoveNewsItem={this.removeNewsItem}

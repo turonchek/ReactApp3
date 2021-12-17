@@ -5,7 +5,6 @@ import { NewsItem } from "../NewsItem/NewsItem";
 export class NewsList extends Component{
     render(){
         const {items, onRemoveNewsItem} = this.props;
-        // console.log(items)
         return (
             <div className="news-list">
                 <div className="news-list__cont">
@@ -26,10 +25,23 @@ export class NewsList extends Component{
 }
 
 NewsList.propTypes = {
-    items: PropTypes.array,
+    items: PropTypes.arrayOf(PropTypes.shape({
+        authors:PropTypes.arrayOf(PropTypes.string),
+        description:PropTypes.string,
+        hashtags:PropTypes.arrayOf(PropTypes.string),
+        id:PropTypes.string,
+        photo:PropTypes.string,
+        text:PropTypes.string,
+        title:PropTypes.string,
+    })),
     onRemoveNewsItem: PropTypes.func.isRequired,
 };
 
 NewsList.defaultProps = {
-    items: [],
+    items: [
+        PropTypes.shape({
+            hashtags:PropTypes.string,
+            authors:PropTypes.string,
+        })
+    ],
 };
